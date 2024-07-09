@@ -1,4 +1,6 @@
+version: "3.9"
 services:
+
   ### Prefect Database
   database:
     image: postgres:15.2-alpine
@@ -32,8 +34,8 @@ services:
       - prefect:/root/.prefect
     entrypoint: ["/opt/prefect/entrypoint.sh", "prefect", "server", "start"]
     environment:
-      - PREFECT_UI_URL=https://4200-gautami2607-prefectdock-ahx1nx4s4fj.ws-us115.gitpod.io/api
-      - PREFECT_API_URL=https://4200-gautami2607-prefectdock-ahx1nx4s4fj.ws-us115.gitpod.io/api
+      - PREFECT_UI_URL=http://127.0.0.1:4200/api
+      - PREFECT_API_URL=http://127.0.0.1:4200/api
       # If you want to access Prefect Server UI from anywhere other than the Docker host machine, you will need to change
       # PREFECT_UI_URL and PREFECT_API_URL to match the external hostname/IP of the host machine. For example:
       #- PREFECT_UI_URL=http://external-ip:4200/api
@@ -54,7 +56,7 @@ services:
     restart: always
     entrypoint: ["/opt/prefect/entrypoint.sh", "prefect", "agent", "start", "-q", "YOUR_WORK_QUEUE_NAME"]
     environment:
-      - PREFECT_API_URL=https://4200-gautami2607-prefectdock-ahx1nx4s4fj.ws-us115.gitpod.io/api
+      - PREFECT_API_URL=http://server:4200/api
 #       Use PREFECT_API_KEY if connecting the agent to Prefect Cloud
 #     - PREFECT_API_KEY=YOUR_API_KEY
     profiles: ["agent"]
@@ -67,7 +69,7 @@ services:
     volumes:
       - "./flows:/root/flows"
     environment:
-      - PREFECT_API_URL=https://4200-gautami2607-prefectdock-ahx1nx4s4fj.ws-us115.gitpod.io/api
+      - PREFECT_API_URL=http://server:4200/api
 #       Use PREFECT_API_KEY to use the CLI to interact with Prefect Cloud
 #     - PREFECT_API_KEY=YOUR_API_KEY
     profiles: ["cli"]
@@ -76,7 +78,6 @@ volumes:
   prefect:
   db:
   minio:
-
 networks:
   default:
     name: prefect-network

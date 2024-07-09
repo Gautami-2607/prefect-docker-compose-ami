@@ -1,0 +1,7 @@
+References:
+1. https://github.com/rpeden/prefect-docker-compose/tree/main
+
+Steps:
+1. Run = docker-compose --profile server up
+2. Run = docker-compose --profile minio up
+3. Run = docker-compose up database server
